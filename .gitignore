@@ -1,0 +1,5 @@
+# Ignore backend application.properties
+scheduling-app-backend/src/main/resources/application.properties
+
+# Ignore system files
+.DS_Store
