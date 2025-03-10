@@ -1,0 +1,11 @@
+.schedule-card {
+    border: 2px solid black;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    max-width: 100px;
+    font-size: 12px;
+  }
+  

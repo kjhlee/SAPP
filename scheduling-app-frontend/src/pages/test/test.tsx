@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Schedule, ScheduleItem} from "../../types/schedule"
 import './test.css'
+import ScheduleCard from "../../components/ScheduleCard";
 
 function Test() {
   const [schedules, setSchedules] = useState<Schedule[]>([]);
@@ -11,6 +12,26 @@ function Test() {
       .then((data) => setSchedules(data));
   }, []);
 
+  const  scheduleByDay: Record<string, ScheduleItem[]> = {
+    MONDAY: [],
+    TUESDAY: [],
+    WEDNESDAY: [],
+    THURSDAY: [],
+    FRIDAY: [],
+    SATURDAY: [],
+    SUNDAY: []
+  }
+  
+  schedules.forEach((schedules) => {
+    schedules.scheduleItems.forEach((item) => {
+      if(item.weekday && scheduleByDay[item.weekday]) {
+        scheduleByDay[item.weekday].push(item);
+      }
+    })
+  })
+
+  console.log(scheduleByDay);
+
   return (
     <div>
       <h2>Schedules</h2>
@@ -19,10 +40,15 @@ function Test() {
           <div key={schedule.id}>
             <h3>Schedule ID: {schedule.id}</h3>
             <ul>
+              {/* maps the item to a scheduleCard component */}
               {schedule.scheduleItems.map((item) => (
-                <li key={item.id}>
-                  {item.name} - {item.startTime} to {item.endTime} ({item.weekday || "No Day"})
-                </li>
+                <ScheduleCard 
+                id = {item.id}
+                name = {item.name}
+                startTime = {item.startTime}
+                endTime = {item.endTime}
+                weekday= {item.weekday}
+                />
               ))}
             </ul>
           </div>
@@ -31,15 +57,25 @@ function Test() {
         <p>No schedules available</p>
       )}
       <div className = "mainPage">
-        <div className = "Calendar-Box">
-          <div className = "Monday"></div>
-          <div className = "Tuesday"></div>
-          <div className = "Wednesday"></div>
-          <div className = "Thursday"></div>
-          <div className = "Friday"></div>
-          <div className = "Saturday"></div>
-          <div className = "Sunday"></div>
+        <div className="Calendar-Box">
+          <div className="column day monday">
+            Monday
+            <ScheduleCard 
+                id = {4}
+                name = {"KJ"}
+                startTime = {"10:30"}
+                endTime = {"5:00"}
+                weekday= {"MONDAY"}
+                />
+          </div>
+          <div className="column day tuesday">Tuesday</div>
+          <div className="column day wednesday">Wednesday</div>
+          <div className="column day thursday">Thursday</div>
+          <div className="column day friday">Friday</div>
+          <div className="column day saturday">Saturday</div>
+          <div className="column day sunday">Sunday</div>
         </div>
+
       </div>
     </div>
   );
