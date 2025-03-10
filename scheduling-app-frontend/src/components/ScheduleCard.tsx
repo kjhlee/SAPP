@@ -6,9 +6,8 @@ const ScheduleCard: React.FC<ScheduleItem> = ({id, name, startTime, endTime, wee
     return (
         <div className = "schedule-card">
             <h3> { name } </h3>
-            <p>StartTime: {startTime} </p>
+            <p>StartTime: {startTime}</p>
             <p>EndTime: {endTime} </p>
-            <p> {weekday} </p>
         </div>
     );
 }
