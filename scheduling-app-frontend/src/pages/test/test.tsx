@@ -1,81 +1,97 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Schedule, ScheduleItem} from "../../types/schedule"
 import './test.css'
 import ScheduleCard from "../../components/ScheduleCard";
+import AddScheduleItem from "../../components/AddScheduleItem";
 
 function Test() {
-  const [schedules, setSchedules] = useState<Schedule[]>([]);
+  const [schedule, setSchedule] = useState<Schedule | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const fetchSchedule = () =>{
+    fetch("http://localhost:8080/schedules/4") // Adjust API URL as needed
+      .then((res) => res.json())
+      .then((data) => setSchedule(data))
+      .catch((err) => console.error("Error fetching schedule: ", err));
+  };
 
   useEffect(() => {
-    fetch("http://localhost:8080/schedules/all") // Adjust API URL as needed
-      .then((res) => res.json())
-      .then((data) => setSchedules(data));
+    fetchSchedule();
   }, []);
 
-  const  scheduleByDay: Record<string, ScheduleItem[]> = {
-    MONDAY: [],
-    TUESDAY: [],
-    WEDNESDAY: [],
-    THURSDAY: [],
-    FRIDAY: [],
-    SATURDAY: [],
-    SUNDAY: []
-  }
   
-  schedules.forEach((schedules) => {
-    schedules.scheduleItems.forEach((item) => {
-      if(item.weekday && scheduleByDay[item.weekday]) {
-        scheduleByDay[item.weekday].push(item);
-      }
-    })
-  })
 
-  console.log(scheduleByDay);
+  const scheduleByDay = useMemo(() => {
+    const groupedByDay: Record<string, ScheduleItem[]> = {
+      MONDAY: [],
+      TUESDAY: [],
+      WEDNESDAY: [],
+      THURSDAY: [],
+      FRIDAY: [],
+      SATURDAY: [],
+      SUNDAY: [],
+    };
+
+    if (schedule?.scheduleItems) {
+      schedule.scheduleItems.forEach((item) => {
+        if (item.weekday && groupedByDay[item.weekday]) {
+          groupedByDay[item.weekday].push(item);
+        }
+      });
+    }
+
+    return groupedByDay; // Computed only when `schedule` changes
+  }, [schedule]);
+
+  // console.log(scheduleByDay)
+  
+  // schedules.forEach((schedules) => {
+  //   schedules.scheduleItems.forEach((item) => {
+  //     if(item.weekday && scheduleByDay[item.weekday]) {
+  //       scheduleByDay[item.weekday].push(item);
+  //     }
+  //   })
+  // })
+
+  // if (schedule && scheduleByDay.scheduleItems){
+  //   schedule.scheduleItems.forEach((items) => {
+  //     if(items.weekday){
+  //       scheduleByDay[items.weekday].push(items);
+  //     }
+  //   })
+  // }
+  // console.log(scheduleByDay);
 
   return (
     <div>
-      <h2>Schedules</h2>
-      {schedules.length > 0 ? (
-        schedules.map((schedule) => (
-          <div key={schedule.id}>
-            <h3>Schedule ID: {schedule.id}</h3>
-            <ul>
-              {/* maps the item to a scheduleCard component */}
-              {schedule.scheduleItems.map((item) => (
-                <ScheduleCard 
-                id = {item.id}
-                name = {item.name}
-                startTime = {item.startTime}
-                endTime = {item.endTime}
-                weekday= {item.weekday}
+      <h2>Schedule ID: {schedule?.id || "Loading..."}</h2>
+      <button onClick={() => setIsModalOpen(true)}>➕ Add Shift</button> {/* Open Modal Button */}
+      {isModalOpen && (
+        <AddScheduleItem
+          scheduleId={schedule?.id || 4}
+          onClose={() => setIsModalOpen(false)}
+          onItemAdded={fetchSchedule} // Auto-refresh schedule after adding shift
+        />
+      )}
+
+      <div className="mainPage">
+        <div className="Calendar-Box">
+          {Object.entries(scheduleByDay).map(([day, items]) => (
+            <div key={day} className={`column day ${day.toLowerCase()}`}>
+              <h3>{day}</h3>
+              {items.map((item) => (
+                <ScheduleCard
+                  key={item.id}
+                  id={item.id}
+                  name={item.name}
+                  startTime={item.startTime}
+                  endTime={item.endTime}
+                  weekday={item.weekday}
                 />
               ))}
-            </ul>
-          </div>
-        ))
-      ) : (
-        <p>No schedules available</p>
-      )}
-      <div className = "mainPage">
-        <div className="Calendar-Box">
-          <div className="column day monday">
-            Monday
-            <ScheduleCard 
-                id = {4}
-                name = {"KJ"}
-                startTime = {"10:30"}
-                endTime = {"5:00"}
-                weekday= {"MONDAY"}
-                />
-          </div>
-          <div className="column day tuesday">Tuesday</div>
-          <div className="column day wednesday">Wednesday</div>
-          <div className="column day thursday">Thursday</div>
-          <div className="column day friday">Friday</div>
-          <div className="column day saturday">Saturday</div>
-          <div className="column day sunday">Sunday</div>
+            </div>
+          ))}
         </div>
-
       </div>
     </div>
   );
