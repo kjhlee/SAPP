@@ -5,13 +5,14 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './pages/Home';
 import './App.css';
 import Test from './pages/test/test';
+import SchedulePage from './pages/SchedulePage';
 
 function App() {
   return (
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/schedules" element={<Test />} />
+      <Route path="/schedules" element={<SchedulePage />} />
     </Routes>
   </BrowserRouter>
   );

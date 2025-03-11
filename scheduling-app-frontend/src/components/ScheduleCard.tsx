@@ -14,9 +14,8 @@ const ScheduleCard: React.FC<ScheduleCardProps> = ({id, name, startTime, endTime
     return (
         <div className = "schedule-card">
             <h3> { name } </h3>
-            <p>StartTime: {startTime}</p>
-            <p>EndTime: {endTime} </p>
-            <button onClick = {handleDelete}> x </button>
+            <p>{startTime} - {endTime}</p>
+            <button className = "button" onClick = {handleDelete}> x </button>
         </div>
     );
 }

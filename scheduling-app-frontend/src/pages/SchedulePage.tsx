@@ -1,10 +1,10 @@
 import { useState, useEffect, useMemo } from "react";
-import { Schedule, ScheduleItem} from "../../types/schedule"
-import './test.css'
-import ScheduleCard from "../../components/ScheduleCard";
-import AddScheduleItem from "../../components/AddScheduleItem";
+import { Schedule, ScheduleItem} from "../types/schedule"
+import './SchedulePage.css'
+import ScheduleCard from "../components/ScheduleCard";
+import AddScheduleItem from "../components/AddScheduleItem";
 
-function Test() {
+function SchedulePage() {
   const [schedule, setSchedule] = useState<Schedule | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -109,4 +109,4 @@ function Test() {
   );
 }
 
-export default Test;
+export default SchedulePage;
