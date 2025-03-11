@@ -77,5 +77,6 @@ public class ScheduleController {
         return ResponseEntity.noContent().build(); // returns HTTP 204 No Content
     }
 
+    //TODO create a method to allow updating a schedule item
 
 }

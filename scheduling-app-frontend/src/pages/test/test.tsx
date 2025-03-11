@@ -43,6 +43,17 @@ function Test() {
     return groupedByDay; // Computed only when `schedule` changes
   }, [schedule]);
 
+  const handleDelete = async(itemId: number) => {
+    try{
+      await fetch(`http://localhost:8080/schedules/4/items/${itemId}`, {
+        method: "DELETE"
+      });
+      fetchSchedule();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   // console.log(scheduleByDay)
   
   // schedules.forEach((schedules) => {
@@ -87,6 +98,7 @@ function Test() {
                   startTime={item.startTime}
                   endTime={item.endTime}
                   weekday={item.weekday}
+                  onDelete = {handleDelete}
                 />
               ))}
             </div>
