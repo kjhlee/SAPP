@@ -1,0 +1,7 @@
+.schedules {
+    display: flex;
+    flex-direction: column;  /* ✅ Makes schedule cards appear in rows */
+    align-items: center; /* ✅ Centers them in the parent container */
+    width: 100%;
+    gap: 15px; /* ✅ Adds spacing between rows */
+}

@@ -1,36 +1,19 @@
-/* .schedule-card {
-    border: 2px solid black;
-    padding: 5px;
-    margin: 5px;
+.rectangle-schedule {
+    width: 100%;
+    max-width: 1000px;
+    border: 2px solid rgb(221, 212, 212);
+    padding: 15px;
     border-radius: 8px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    background-color: white;
-    font-size: 12px;
-  }
-   */
-
-.schedule-card {
-    position: relative;
-    border: 2px solid black;
-    width: 100px;
-    height: 75px;
-    margin-bottom: 5px;
-    font-size: 12px;
-}
-.schedule-card h3 p {
-    position: absolute;
-    padding: 0 10px;
-}
-p {
-    font-size: 15px;
+    text-align: left;
+    display: flex;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.button {
-    all: unset;
-    position: absolute;
-    top: 1px;
-    right: 5px;
-    font-size: 20px;
-    color: red;
+.rectangle-schedule:hover{
+    transform: translateY(-5px); /* ✅ Slightly lifts the card */
+    box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.3); /* ✅ Darker shadow */
+    background-color: #f8f8f8; /* ✅ Slightly lighter background */
+    cursor: pointer;
 }
 

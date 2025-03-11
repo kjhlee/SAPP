@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { Schedule, ScheduleItem} from "../types/schedule"
 import './SchedulePage.css'
-import ScheduleCard from "../components/ScheduleCard";
+import ScheduleCard from "../components/ScheduleItemCard";
 import AddScheduleItem from "../components/AddScheduleItem";
 
 function SchedulePage() {

@@ -1,22 +1,16 @@
-import React from "react"
-import { ScheduleItem } from "../types/schedule";
-import "./ScheduleCard.css"
+import React from "react";
+import { Schedule } from "../types/schedule";
+import './ScheduleCard.css'
 
-interface ScheduleCardProps extends ScheduleItem{
-    onDelete: (id: number) => void;
+interface ScheduleCardProps{
+    id: number;
 }
-const ScheduleCard: React.FC<ScheduleCardProps> = ({id, name, startTime, endTime, weekday, onDelete}) =>{
-
-    const handleDelete = () => {
-        onDelete(id);
-    };
-
-    return (
-        <div className = "schedule-card">
-            <h3> { name } </h3>
-            <p>{startTime} - {endTime}</p>
-            <button className = "button" onClick = {handleDelete}> x </button>
+const ScheduleCard: React.FC<ScheduleCardProps> =({ id }) => {
+    return(
+        <div className = "rectangle-schedule">
+            <h1>Schedule { id }</h1>
         </div>
     );
 }
+
 export default ScheduleCard;
