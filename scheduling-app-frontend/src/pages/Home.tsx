@@ -38,6 +38,19 @@ function Home(){
             console.error(error);
         }
     }
+
+    const handleDelete = async(scheduleId: number) => {
+        try {
+            await fetch(`http://localhost:8080/schedules/delete/${scheduleId}`,
+                {
+                    method: "DELETE"
+                }
+            )
+            fetchSchedules();
+        } catch (error){
+            console.error(error);
+        }
+    }
     return(
         <div>
             <h1>SAPP</h1>
@@ -46,7 +59,7 @@ function Home(){
             <div className = "schedules">
                 {schedules.length > 0 ? (
                     schedules.map((schedule) => (
-                        <ScheduleCard key={schedule.id} id = {schedule.id} />
+                        <ScheduleCard key={schedule.id} id = {schedule.id} onDelete = {handleDelete} />
                     ))
                 ) : (
                     <p>no schedules</p>
