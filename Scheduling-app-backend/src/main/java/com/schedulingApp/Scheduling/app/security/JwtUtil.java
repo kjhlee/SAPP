@@ -1,5 +1,6 @@
 package com.schedulingApp.Scheduling.app.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Date;
@@ -11,15 +12,22 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtil {
-    private static final String SECRET_KEY = "718E785AD441DD3DB38C156ED2692A2B3C4D5E6F7G8H9J";
-    private static final long EXPIRATION_TIME = 86400000;
-    private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    private final Key key;
+    private final long expirationTime;
+
+    public JwtUtil(
+        @Value("${jwt.secret}") String secretKey,
+        @Value("${jwt.expiration}") long expiration
+    ) {
+        this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
+        this.expirationTime = expiration;
+    }
     
     public String generateToken(String email){
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(key, SignatureAlgorithm.HS256)
             .compact();
     }
