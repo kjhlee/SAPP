@@ -53,8 +53,10 @@ function Home(){
     }
     return(
         <div>
-            <h1>SAPP</h1>
-            <p>by: kj Lee</p>
+            <div className = "header">
+                <h1>SAPP</h1>
+                <p>by: kj Lee</p>
+            </div>
             <button onClick = {handleCreateSchedule}>+ Add Schedule</button>
             <div className = "schedules">
                 {schedules.length > 0 ? (
