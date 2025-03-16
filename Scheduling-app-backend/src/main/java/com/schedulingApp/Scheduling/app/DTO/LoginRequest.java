@@ -11,15 +11,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequest {
-
+public class LoginRequest {
     @Email
     @NotBlank
     private String email;
 
     @NotBlank
     private String password;
-
-    @NotBlank
-    private String confirmPassword;
+    
 }

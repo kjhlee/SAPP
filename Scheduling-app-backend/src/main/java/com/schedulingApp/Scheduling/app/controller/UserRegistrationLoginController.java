@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.schedulingApp.Scheduling.app.DTO.LoginRequest;
 import com.schedulingApp.Scheduling.app.DTO.RegisterRequest;
 import com.schedulingApp.Scheduling.app.service.UserService;
 
@@ -20,5 +21,10 @@ public class UserRegistrationLoginController {
     @PostMapping("/register")
     public String registerUser(@Valid @RequestBody RegisterRequest request){
         return userService.registerUser(request);
+    }
+
+    @PostMapping("/login")
+    public String loginUser(@Valid @RequestBody LoginRequest request){
+        return userService.loginUser(request);
     }
 }
