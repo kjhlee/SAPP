@@ -29,7 +29,7 @@ function Register() {
 
             const data = await response.text();
             if(response.ok) {
-                navigate("/ScheduleList");
+                navigate("/login");
             } else {
                 alert(`Error: ${data}`)
             }

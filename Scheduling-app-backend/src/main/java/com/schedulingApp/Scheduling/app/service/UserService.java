@@ -41,7 +41,7 @@ public class UserService {
     public String loginUser(LoginRequest request){
         Optional<User> userOpt = userRepo.findByEmail(request.getEmail());
         if(userOpt.isEmpty() || !passwordEncoder.matches(request.getPassword(), userOpt.get().getPassword())){
-            return("Invalid email or password");
+            throw new IllegalArgumentException("Invalid email or password");
         }
         return jwtUtil.generateToken(request.getEmail());
     }

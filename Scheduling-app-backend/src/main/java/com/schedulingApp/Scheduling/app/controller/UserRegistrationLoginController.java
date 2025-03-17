@@ -1,5 +1,6 @@
 package com.schedulingApp.Scheduling.app.controller;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +37,20 @@ public class UserRegistrationLoginController {
         }
     }
 
+    // @PostMapping("/login")
+    // public String loginUser(@Valid @RequestBody LoginRequest request){
+    //     return userService.loginUser(request);
+    // }
+
     @PostMapping("/login")
-    public String loginUser(@Valid @RequestBody LoginRequest request){
-        return userService.loginUser(request);
+    public ResponseEntity<String> loginUser(@RequestBody LoginRequest request){
+        try {
+            String token = userService.loginUser(request);
+            return ResponseEntity.ok("Login Successful, token: " + token);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong!");
+        }
     }
 }
