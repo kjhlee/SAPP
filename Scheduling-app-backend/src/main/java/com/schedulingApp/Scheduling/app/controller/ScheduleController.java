@@ -1,12 +1,9 @@
 package com.schedulingApp.Scheduling.app.controller;
 
 import java.util.List;
-
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.schedulingApp.Scheduling.app.models.Schedule;
 import com.schedulingApp.Scheduling.app.models.ScheduleItem;
 import com.schedulingApp.Scheduling.app.models.User;
-import com.schedulingApp.Scheduling.app.repo.ScheduleRepo;
-import com.schedulingApp.Scheduling.app.repo.UserRepo;
+
 import com.schedulingApp.Scheduling.app.security.JwtUtil;
 import com.schedulingApp.Scheduling.app.service.ScheduleService;
+import com.schedulingApp.Scheduling.app.service.UserService;
 
 @RestController
 @RequestMapping("schedules")
@@ -31,12 +28,16 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @Autowired
-    private ScheduleRepo scheduleRepo;
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     public ScheduleController(ScheduleService scheduleService){
         this.scheduleService = scheduleService;
     }
+    
 
     @GetMapping("/test")
     public ResponseEntity<String> testEndpoint() {
@@ -92,18 +93,42 @@ public class ScheduleController {
         return ResponseEntity.noContent().build(); // returns HTTP 204 No Content
     }
 
-    // @GetMapping("/my")
-    // public ResponseEntity<List<Schedule>> getMySchedules(@AuthenticationPrincipal User user){
-    //     List<Schedule> schedules = scheduleRepo.findByUser(user);
-    //     return ResponseEntity.ok(schedules);
-    // }
+    @GetMapping("/my")
+    public ResponseEntity<List<Schedule>> getMySchedules(@RequestHeader("Authorization") String token){
+        if (token == null || !token.startsWith("Bearer ")) {
+            throw new IllegalArgumentException("Missing valid key");
+        }
+        String jwt = token.substring(7);
+        //System.out.println(jwt);
+        String email = jwtUtil.extractEmail(jwt);
+
+        User user = userService.findUser(email);
+
+        if(user == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        List<Schedule> schedules = scheduleService.getSchedulesbyUser(user);
+        return ResponseEntity.ok(schedules);
+    
+    }
 
     @PostMapping("/myadd")
-    public ResponseEntity<Schedule> createSchedule(@AuthenticationPrincipal User user, @RequestBody Schedule schedule){
+    public ResponseEntity<Schedule> createSchedule(@RequestHeader("Authorization") String token, @RequestBody Schedule schedule){
+        String jwt = token.substring(7);
+        String email = jwtUtil.extractEmail(jwt);
+
+        User user = userService.findUser(email);
+
+        if(user == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
         schedule.setUser(user);
-        Schedule savedSchedule = scheduleRepo.save(schedule);
+        Schedule savedSchedule = scheduleService.addSchedule(schedule);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(savedSchedule);
+
     }
 
     //TODO create a method to allow updating a schedule item

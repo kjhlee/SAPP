@@ -5,20 +5,22 @@ import './styles/ScheduleList.css'
 
 function ScheduleList(){
     const [schedules, setSchedules] = useState<Schedule[]> ([]);
+    const token = localStorage.getItem("token");
     const fetchSchedules = async () => {
         // fetch("http://localhost:8080/schedules/all")
         //     .then((res) => res.json())
         //     .then((data) => setSchedules(data))
         //     .catch((err) => console.error("Error fetching schedules: ", err));
         try {
-            const token = localStorage.getItem("token");
+            
             const response = await fetch('http://localhost:8080/schedules/my', {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`
-                }
+                },
+                credentials: "include"
             });
-            console.log(response);
+            
             const data = await response.json();
             setSchedules(data);
         } catch (error) {
@@ -37,12 +39,15 @@ function ScheduleList(){
         };
 
         try{
-            const response = await fetch(`http://localhost:8080/schedules/add`, {
+            // const token = localStorage.getItem("token");
+            const response = await fetch(`http://localhost:8080/schedules/myadd`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
-                body: JSON.stringify(newSchedule)
+                body: JSON.stringify(newSchedule),
+                credentials: "include"
             });
             if(!response.ok){
                 throw new Error("Failed to create a schedule")

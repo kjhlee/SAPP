@@ -45,4 +45,9 @@ public class UserService {
         }
         return jwtUtil.generateToken(request.getEmail());
     }
+
+    public User findUser(String email){
+        return userRepo.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("User does not exist"));
+    }
+
 }

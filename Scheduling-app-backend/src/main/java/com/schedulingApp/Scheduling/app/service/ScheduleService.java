@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.schedulingApp.Scheduling.app.models.Schedule;
 import com.schedulingApp.Scheduling.app.models.ScheduleItem;
+import com.schedulingApp.Scheduling.app.models.User;
 import com.schedulingApp.Scheduling.app.repo.ScheduleRepo;
 
 @Service
@@ -60,6 +61,11 @@ public class ScheduleService {
         }
     
         scheduleRepo.save(currSchedule);
+    }
+
+    public List<Schedule> getSchedulesbyUser(User user){
+        List<Schedule> schedules = scheduleRepo.findByUser(user);
+        return schedules;
     }
     
 
