@@ -1,6 +1,8 @@
 package com.schedulingApp.Scheduling.app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,9 +20,20 @@ public class UserRegistrationLoginController {
     @Autowired
     private UserService userService;
 
+    // @PostMapping("/register")
+    // public String registerUser(@Valid @RequestBody RegisterRequest request){
+    //     return userService.registerUser(request);
+    // }
     @PostMapping("/register")
-    public String registerUser(@Valid @RequestBody RegisterRequest request){
-        return userService.registerUser(request);
+    public ResponseEntity<String> registerUser(@RequestBody RegisterRequest request){
+        try {
+            userService.registerUser(request);
+            return ResponseEntity.ok("User registered successfully!");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong!");
+        }
     }
 
     @PostMapping("/login")

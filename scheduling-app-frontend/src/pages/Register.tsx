@@ -1,15 +1,72 @@
-import "./styles/Register.css"
+import "./styles/Register.css";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 function Register() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [cPassword, setCpassword] = useState("");
+    const navigate = useNavigate();
+    const handleRegisterAccount = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if(password !== cPassword){
+            alert("Passwords do not match!");
+            return;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/auth/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                    confirmPassword: cPassword
+                })
+            });
+
+            const data = await response.text();
+            if(response.ok) {
+                navigate("/ScheduleList");
+            } else {
+                alert(`Error: ${data}`)
+            }
+        } catch (error){
+            alert("Failed to Register. Try Again");
+        }
+    }
     return(
         <div>
             <div className = "registerForm">
-                <form>
+                <form onSubmit = {handleRegisterAccount}>
                     <label htmlFor="email">Email: </label>
-                    <input type = "text" id = "email" name = "email"></input>
+                    <input 
+                        type = "text" 
+                        id = "email" 
+                        name = "email"
+                        value = {email}
+                        onChange = {(e) => setEmail(e.target.value)}
+                        required 
+                    />
+
                     <label htmlFor = "password">Password: </label>
-                    <input type = "password" name = "password"></input>
+                    <input 
+                        type = "password" 
+                        name = "password"
+                        value = {password}
+                        onChange = {(e) => setPassword(e.target.value)}
+                        required 
+                        />
                     <label htmlFor = "cPassword">Confirm Password: </label>
-                    <input type = "password" name = "cpassword"></input>
+                    <input 
+                        type = "password" 
+                        name = "cpassword"
+                        value = {cPassword}
+                        onChange = {(e) => setCpassword(e.target.value)}
+                        required 
+                    />
                     <input type = "submit" value = "Register"></input>
                 </form>
             </div>

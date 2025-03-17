@@ -25,7 +25,7 @@ public class UserService {
 
     public String registerUser(RegisterRequest request){ 
         if(userRepo.existsByEmail(request.getEmail())){
-            throw new IllegalArgumentException("This email already exists");
+           throw new IllegalArgumentException("Email Already exists");
         }
         if(!request.getPassword().equals(request.getConfirmPassword())){
             throw new IllegalArgumentException("Passwords do not match");
@@ -41,7 +41,7 @@ public class UserService {
     public String loginUser(LoginRequest request){
         Optional<User> userOpt = userRepo.findByEmail(request.getEmail());
         if(userOpt.isEmpty() || !passwordEncoder.matches(request.getPassword(), userOpt.get().getPassword())){
-            throw new IllegalArgumentException("Invalid email or password");
+            return("Invalid email or password");
         }
         return jwtUtil.generateToken(request.getEmail());
     }
