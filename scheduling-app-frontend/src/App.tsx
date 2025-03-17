@@ -2,17 +2,22 @@ import React from 'react';
 import logo from './logo.svg';
 import ReactDOM from "react-dom/client"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from './pages/Home';
 import './App.css';
-import Test from './pages/test/test';
 import SchedulePage from './pages/SchedulePage';
+import Login from './pages/Login';
+import ScheduleList from './pages/ScheduleList';
+import Home from './pages/Home';
+import Register from './pages/Register';
 
 function App() {
   return (
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path ="/ScheduleList" element={<ScheduleList />} />
       <Route path="/schedules/:id" element={<SchedulePage />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element = {<Register />} />
     </Routes>
   </BrowserRouter>
   );

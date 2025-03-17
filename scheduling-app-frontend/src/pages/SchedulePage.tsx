@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { Schedule, ScheduleItem} from "../types/schedule"
-import './SchedulePage.css'
+import './styles/SchedulePage.css'
 import ScheduleCard from "../components/ScheduleItemCard";
 import AddScheduleItem from "../components/AddScheduleItem";
 import { useParams } from "react-router-dom";
@@ -109,6 +109,6 @@ function SchedulePage() {
         </div>
         </div>
     );
-    }
+}
 
 export default SchedulePage;

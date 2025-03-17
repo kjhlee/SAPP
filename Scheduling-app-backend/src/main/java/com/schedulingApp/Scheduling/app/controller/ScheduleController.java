@@ -28,6 +28,11 @@ public class ScheduleController {
         this.scheduleService = scheduleService;
     }
 
+    @GetMapping("/test")
+    public ResponseEntity<String> testEndpoint() {
+        return ResponseEntity.ok("Schedule API is working!");
+    }
+
     @GetMapping("/all")
     public ResponseEntity<List<Schedule>> getAllSchedules(){
         List<Schedule> allSchedules = scheduleService.getSchedule();
