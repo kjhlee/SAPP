@@ -34,12 +34,6 @@ public class ScheduleController {
     private ScheduleRepo scheduleRepo;
 
     @Autowired
-    private JwtUtil jwtUtil;
-
-    @Autowired
-    private UserRepo userRepo;
-
-    @Autowired
     public ScheduleController(ScheduleService scheduleService){
         this.scheduleService = scheduleService;
     }
@@ -98,11 +92,11 @@ public class ScheduleController {
         return ResponseEntity.noContent().build(); // returns HTTP 204 No Content
     }
 
-    @GetMapping("/my")
-    public ResponseEntity<List<Schedule>> getMySchedules(@AuthenticationPrincipal User user){
-        List<Schedule> schedules = scheduleRepo.findByUser(user);
-        return ResponseEntity.ok(schedules);
-    }
+    // @GetMapping("/my")
+    // public ResponseEntity<List<Schedule>> getMySchedules(@AuthenticationPrincipal User user){
+    //     List<Schedule> schedules = scheduleRepo.findByUser(user);
+    //     return ResponseEntity.ok(schedules);
+    // }
 
     @PostMapping("/myadd")
     public ResponseEntity<Schedule> createSchedule(@AuthenticationPrincipal User user, @RequestBody Schedule schedule){

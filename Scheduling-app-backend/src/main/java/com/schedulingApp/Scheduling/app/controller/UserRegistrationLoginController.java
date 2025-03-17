@@ -3,7 +3,6 @@ package com.schedulingApp.Scheduling.app.controller;
 import java.util.Collections;
 import java.util.Map;
 
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.schedulingApp.Scheduling.app.DTO.LoginRequest;
 import com.schedulingApp.Scheduling.app.DTO.RegisterRequest;
 import com.schedulingApp.Scheduling.app.service.UserService;
-
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")

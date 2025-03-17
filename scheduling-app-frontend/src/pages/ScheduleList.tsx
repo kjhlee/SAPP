@@ -18,6 +18,7 @@ function ScheduleList(){
                     "Authorization": `Bearer ${token}`
                 }
             });
+            console.log(response);
             const data = await response.json();
             setSchedules(data);
         } catch (error) {
