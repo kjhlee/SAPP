@@ -5,11 +5,24 @@ import './styles/ScheduleList.css'
 
 function ScheduleList(){
     const [schedules, setSchedules] = useState<Schedule[]> ([]);
-    const fetchSchedules = () => {
-        fetch("http://localhost:8080/schedules/all")
-            .then((res) => res.json())
-            .then((data) => setSchedules(data))
-            .catch((err) => console.error("Error fetching schedules: ", err));
+    const fetchSchedules = async () => {
+        // fetch("http://localhost:8080/schedules/all")
+        //     .then((res) => res.json())
+        //     .then((data) => setSchedules(data))
+        //     .catch((err) => console.error("Error fetching schedules: ", err));
+        try {
+            const token = localStorage.getItem("token");
+            const response = await fetch('http://localhost:8080/schedules/my', {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            const data = await response.json();
+            setSchedules(data);
+        } catch (error) {
+            console.error("Failed to fetch Schedules", error);
+        }
     };
 
     useEffect(() => {

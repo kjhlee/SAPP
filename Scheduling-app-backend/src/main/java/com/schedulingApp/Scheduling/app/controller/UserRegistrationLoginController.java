@@ -1,5 +1,8 @@
 package com.schedulingApp.Scheduling.app.controller;
 
+import java.util.Collections;
+import java.util.Map;
+
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,14 +46,16 @@ public class UserRegistrationLoginController {
     // }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody LoginRequest request){
+    public ResponseEntity<Map<String, String>> loginUser(@RequestBody LoginRequest request){
         try {
             String token = userService.loginUser(request);
-            return ResponseEntity.ok("Login Successful, token: " + token);
+            return ResponseEntity.ok(Collections.singletonMap("token", token));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Collections.singletonMap("error", e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong!");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("error", "Something went wrong"));
         }
     }
 }

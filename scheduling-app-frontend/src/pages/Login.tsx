@@ -20,13 +20,15 @@ function Login(){
                     password: password
                 })
             });
-            const data = await response.text();
+            const data = await response.json();
+            localStorage.setItem("token", data.token);
             if(response.ok) {
                 navigate("/ScheduleList");
             } else {
                 alert(`Error ${data}`);
             }
         } catch (error) {
+            console.log(error);
             alert("Failed To Login, Try Again");
         }
     }
