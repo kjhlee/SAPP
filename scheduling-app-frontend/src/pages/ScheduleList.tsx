@@ -6,7 +6,6 @@ import './styles/ScheduleList.css'
 function ScheduleList(){
     const [schedules, setSchedules] = useState<Schedule[]> ([]);
     const token = localStorage.getItem("token");
-    console.log(token);
     if(!token) {
         console.log("you have no token");
     }
@@ -30,7 +29,7 @@ function ScheduleList(){
             }
             
             const data = await response.json();
-            console.log(data);
+            // console.log(data);
             setSchedules(data);
         } catch (error) {
             console.error("Failed to fetch Schedules", error);

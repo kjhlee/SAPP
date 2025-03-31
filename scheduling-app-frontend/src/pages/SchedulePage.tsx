@@ -9,12 +9,33 @@ function SchedulePage() {
     const { id } = useParams();
     const [schedule, setSchedule] = useState<Schedule | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const token = localStorage.getItem("token");
 
-    const fetchSchedule = () =>{
-        fetch(`http://localhost:8080/schedules/${id}`) // TODO: api should be the given id for the schedule
-        .then((res) => res.json())
-        .then((data) => setSchedule(data))
-        .catch((err) => console.error("Error fetching schedule: ", err));
+    // const fetchSchedule = () =>{
+    //     fetch(`http://localhost:8080/schedules/${id}`) // TODO: api should be the given id for the schedule
+    //     .then((res) => res.json())
+    //     .then((data) => setSchedule(data))
+    //     .catch((err) => console.error("Error fetching schedule: ", err));
+    // };
+
+    const fetchSchedule = async () => {
+        try {
+            const response = await fetch(`http://localhost:8080/schedules/${id}`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                credentials: "include"
+            });
+            if(!response.ok){
+                throw new Error (`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+            setSchedule(data);
+        } catch (error) {
+            console.error("Error Fetching this schedule", error);
+        }
     };
 
     useEffect(() => {

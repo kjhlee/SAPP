@@ -16,6 +16,8 @@ const AddScheduleItem: React.FC<AddScheduleItemProps> = ({
     const[endTime, setEndTime] = useState("");
     const[weekday, setWeekday] = useState("MONDAY");
 
+    const token = localStorage.getItem("token");
+
     const handleSubmit = async (e: React.FormEvent) => {
         console.log({scheduleId})
         e.preventDefault();
@@ -27,7 +29,10 @@ const AddScheduleItem: React.FC<AddScheduleItemProps> = ({
                 `http://localhost:8080/schedules/${scheduleId}/items`,
                 {
                     method: "POST",
-                    headers: {"Content-type": "application/json"},
+                    headers: {
+                        "Content-type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
                     body: JSON.stringify(newItem)
                 }
             );
