@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import com.schedulingApp.Scheduling.app.security.JwtUtil;
 import com.schedulingApp.Scheduling.app.service.ScheduleService;
 import com.schedulingApp.Scheduling.app.service.UserService;
 
+@CrossOrigin(origins = "http://localhost:3000") 
 @RestController
 @RequestMapping("schedules")
 public class ScheduleController {
@@ -95,18 +97,19 @@ public class ScheduleController {
 
     @GetMapping("/my")
     public ResponseEntity<List<Schedule>> getMySchedules(@RequestHeader("Authorization") String token){
+        // System.out.println("I got to here");
         if (token == null || !token.startsWith("Bearer ")) {
             throw new IllegalArgumentException("Missing valid key");
         }
         String jwt = token.substring(7);
-        //System.out.println(jwt);
+        // System.out.println(jwt);
         String email = jwtUtil.extractEmail(jwt);
 
         User user = userService.findUser(email);
 
-        if(user == null){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+        // if(user == null){
+        //     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        // }
 
         List<Schedule> schedules = scheduleService.getSchedulesbyUser(user);
         return ResponseEntity.ok(schedules);
