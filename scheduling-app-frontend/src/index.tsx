@@ -9,9 +9,12 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <AuthProvider>
+  // <AuthProvider>
+  //   <App />
+  // </AuthProvider>
+  <React.StrictMode>
     <App />
-  </AuthProvider>
+  </React.StrictMode>
   
 );
 

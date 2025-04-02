@@ -69,8 +69,13 @@ function SchedulePage() {
     const handleDelete = async(itemId: number) => {
         try{
         await fetch(`http://localhost:8080/schedules/4/items/${itemId}`, {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
         });
+        console.log("clicked");
         fetchSchedule();
         } catch (error) {
             console.error(error);

@@ -57,6 +57,7 @@ function Login(){
                     <input type = "submit" value = "Login"></input>
                 </form>
             </div>
+            <p>If you don't have an account click to <a href = "http://localhost:3000/register">Register</a></p>
         </div>
     )
 }

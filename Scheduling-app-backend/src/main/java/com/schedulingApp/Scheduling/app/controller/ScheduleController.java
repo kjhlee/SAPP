@@ -116,8 +116,14 @@ public class ScheduleController {
     }
     @DeleteMapping("/{scheduleId}/items/{itemId}") // change to /{user_id}/deleteItem/{itemId}
     public ResponseEntity<Void> deleteScheduleItem(
+        @RequestHeader("Authorization") String token,
         @PathVariable Long scheduleId,
         @PathVariable Long itemId) {
+        
+        // User user = getUserFromToken(token);
+        // Schedule schedule = scheduleService.getScheduleById(scheduleId)
+        //     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Schedule Not Found"));
+        
         scheduleService.deleteScheduleItem(scheduleId, itemId);
         return ResponseEntity.noContent().build(); // returns HTTP 204 No Content
     }

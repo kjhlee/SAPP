@@ -70,10 +70,17 @@ function ScheduleList(){
         try {
             await fetch(`http://localhost:8080/schedules/delete/${scheduleId}`,
                 {
-                    method: "DELETE"
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    credentials: "include"
                 }
             )
-            fetchSchedules();
+            setTimeout(() => {
+                fetchSchedules();
+            }, 50);
         } catch (error){
             console.error(error);
         }
