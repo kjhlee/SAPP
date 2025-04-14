@@ -34,31 +34,34 @@ function Login(){
         }
     }
     return(
-        <div>
-            <div className = "loginForm">
-                <form onSubmit = {handleLogin}>
-                    <label htmlFor="email">Email: </label>
-                    <input 
-                        type = "text" 
-                        id = "email" 
-                        name = "email"
-                        value = {email}
-                        onChange = {(e) => setEmail(e.target.value)}
-                        required
-                        />
-                    <label htmlFor = "password">Password: </label>
-                    <input 
-                        type = "password" 
-                        name = "password"
-                        value = {password}
-                        onChange = {(e) => setPassword(e.target.value)}
-                        required 
-                        />
-                    <input type = "submit" value = "Login"></input>
+        <div className="loginWrapper">
+            <div className="loginForm">
+                <form onSubmit={handleLogin}>
+                <label htmlFor="email">Email: </label>
+                <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                />
+                <label htmlFor="password">Password: </label>
+                <input
+                    type="password"
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                />
+                <input type="submit" value="Login" />
+                <p className="register-link">
+                    If you don't have an account, <a href="http://localhost:3000/register">Register</a>
+                </p>
                 </form>
             </div>
-            <p>If you don't have an account click to <a href = "http://localhost:3000/register">Register</a></p>
         </div>
+
     )
 }
 

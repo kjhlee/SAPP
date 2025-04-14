@@ -76,7 +76,9 @@ function SchedulePage() {
             }
         });
         console.log("clicked");
-        fetchSchedule();
+        setTimeout(() => {
+            fetchSchedule();
+        }, 50);
         } catch (error) {
             console.error(error);
         }

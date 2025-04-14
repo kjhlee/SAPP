@@ -60,7 +60,9 @@ function ScheduleList(){
             if(!response.ok){
                 throw new Error("Failed to create a schedule")
             }
-            fetchSchedules();
+            setTimeout(() => {
+                fetchSchedules();
+            }, 50);
         } catch (error) {
             console.error(error);
         }

@@ -1,6 +1,54 @@
-.loginForm{
+.loginForm {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-}
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #f2f2f2;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  input[type="text"],
+  input[type="password"],
+  input[type="submit"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+  
+  input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  .register-link {
+    margin-top: 0px;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  
+  .register-link a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .register-link a:hover {
+    text-decoration: underline;
+  }
+  
+  body {
+    overflow: hidden;
+  }
