@@ -57,7 +57,7 @@ function Login(){
                 />
                 <input type="submit" value="Login" />
                 <p className="register-link">
-                    If you don't have an account, <a href="http://localhost:3000/register">Register</a>
+                    If you don't have an account, <a href="https://sapp-frontend.onrender.com/">Register</a>
                 </p>
                 </form>
             </div>

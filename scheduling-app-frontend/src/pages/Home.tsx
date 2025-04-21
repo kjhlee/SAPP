@@ -6,9 +6,9 @@ function Home() {
             <h1>SAPP</h1>
             <p>by: kj Lee</p>
             <p>This is the home page</p>
-            <a href="http://localhost:3000/login">Login</a>
+            <a href="https://sapp-frontend.onrender.com/login">Login</a>
             <br></br>
-            <a href="http://localhost:3000/ScheduleList">Schedules</a>
+            <a href="https://sapp-frontend.onrender.com/ScheduleList">Schedules</a>
         </div>
     )
 }
