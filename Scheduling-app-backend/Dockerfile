@@ -1,5 +1,5 @@
 # Stage 1: Build the JAR
-FROM eclipse-temurin:21-jdk as builder
+FROM eclipse-temurin:17-jdk as builder
 
 WORKDIR /app
 
@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y maven
 RUN mvn clean package -DskipTests
 
 # Stage 2: Run the JAR
-FROM eclipse-temurin:21-jdk
+FROM eclipse-temurin:17-jdk
 
 WORKDIR /app
 
