@@ -23,7 +23,7 @@ function Login(){
             });
             const data = await response.json();
             localStorage.setItem("token", data.token);
-            console.log(localStorage.getItem("token"));
+            // console.log(localStorage.getItem("token"));
             if(response.ok) {
                 navigate("/ScheduleList");
             } else {
