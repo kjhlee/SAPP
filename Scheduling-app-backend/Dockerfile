@@ -1,14 +1,17 @@
-# Use a base Java image
-FROM eclipse-temurin:24-jdk
+# Stage 1: Build the JAR
+FROM eclipse-temurin:24-jdk as builder
 
-# Set working directory
 WORKDIR /app
 
-# Copy JAR file into container (assumes you've built it)
-COPY target/scheduling-app-0.0.1-SNAPSHOT.jar app.jar
+COPY . .
 
-# Set environment variable (optional)
-ENV JAVA_OPTS=""
+RUN ./mvnw clean package -DskipTests
 
-# Command to run the app
-ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
+# Stage 2: Run the JAR
+FROM eclipse-temurin:24-jdk
+
+WORKDIR /app
+
+COPY --from=builder /app/target/scheduling-app-0.0.1-SNAPSHOT.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
