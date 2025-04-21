@@ -28,20 +28,42 @@ function SchedulePage() {
                 },
                 credentials: "include"
             });
-            if(!response.ok){
-                throw new Error (`HTTP error! Status: ${response.status}`);
-            }
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+            
             const data = await response.json();
             setSchedule(data);
         } catch (error) {
-            console.error("Error Fetching this schedule", error);
+            console.error("Error fetching this schedule", error);
         }
     };
+    
 
     useEffect(() => {
-        fetchSchedule();
-    }, []);
+        let isMounted = true;
 
+        const loadData = async () => {
+            try {
+            const response = await fetch(`http://localhost:8080/schedules/${id}`, {
+                method: "GET",
+                headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+                },
+                credentials: "include",
+            });
+            const data = await response.json();
+            if (isMounted) setSchedule(data);
+            } catch (error) {
+                console.error("Error fetching schedule:", error);
+            }
+        };
+
+        loadData();
+        return () => {
+            isMounted = false;
+        };
+        }, [id]);
+    
   
 
     const scheduleByDay = useMemo(() => {
@@ -66,19 +88,16 @@ function SchedulePage() {
         return groupedByDay; // Computed only when `schedule` changes
     }, [schedule]);
 
-    const handleDelete = async(itemId: number) => {
+    const handleDelete = async(scheduleId: number, itemId: number) => {
         try{
-        await fetch(`http://localhost:8080/schedules/4/items/${itemId}`, {
+        await fetch(`http://localhost:8080/schedules/${scheduleId}/items/${itemId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             }
         });
-        console.log("clicked");
-        setTimeout(() => {
-            fetchSchedule();
-        }, 50);
+        await fetchSchedule();
         } catch (error) {
             console.error(error);
         }
@@ -128,7 +147,7 @@ function SchedulePage() {
                     startTime={item.startTime}
                     endTime={item.endTime}
                     weekday={item.weekday}
-                    onDelete = {handleDelete}
+                    onDelete = {() => handleDelete(schedule?.id || 0, item.id)}
                     />
                 ))}
                 </div>

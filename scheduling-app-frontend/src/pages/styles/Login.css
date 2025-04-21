@@ -50,5 +50,34 @@
   }
   
   body {
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
+
+  @media (max-width: 600px) {
+    .loginForm {
+      align-items: flex-start;
+      padding: 20px;
+      height: auto;
+    }
+  
+    form {
+      width: 100%;
+      padding: 20px;
+      box-shadow: none;
+      border-radius: 0;
+      background-color: white;
+    }
+  
+    input[type="text"],
+    input[type="password"],
+    input[type="submit"] {
+      width: 100%;
+      font-size: 1rem;
+    }
+  
+    .register-link {
+      font-size: 0.85rem;
+    }
+  }
+  

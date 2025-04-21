@@ -32,3 +32,25 @@
     color: red;
     font-family: 'M PLUS Rounded 1c', sans-serif;
 }
+@media (max-width: 768px) {
+    .delete-button {
+      font-size: 1.5rem;         /* make it big enough for touch */
+      padding: 8px;
+      margin-right: 10px;
+      position: relative;        /* avoid absolute right edge pinning */
+      right: 0;
+    }
+  
+    .schedule-card {
+      padding: 12px;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+    .schedule-title {
+      font-size: 1.1rem;
+      word-break: break-word;     /* prevent text overflow */
+    }
+  }
+  
