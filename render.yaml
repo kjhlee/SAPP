@@ -1,7 +1,6 @@
 services:
   - type: web
     name: sapp-backend
-    env: java
     rootDir: scheduling-app-backend
     buildCommand: ./mvnw package -DskipTests
     startCommand: java -jar target/scheduling-app-0.0.1-SNAPSHOT.jar
@@ -13,7 +12,7 @@ services:
       - key: SPRING_DATASOURCE_USERNAME
         value: sappdb_user
       - key: SPRING_DATASOURCE_PASSWORD
-        value: your_password_here
+        value: YOUR_PASSWORD_HERE
       - key: JWT_SECRET
         value: your_jwt_secret
       - key: JWT_EXPIRATION
