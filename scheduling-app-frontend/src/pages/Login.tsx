@@ -1,6 +1,6 @@
 import "./styles/Login.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login(){
     const BASE_URL = process.env.REACT_APP_API_URL;
@@ -57,7 +57,8 @@ function Login(){
                 />
                 <input type="submit" value="Login" />
                 <p className="register-link">
-                    If you don't have an account, <a href="https://sapp-frontend.onrender.com/">Register</a>
+                    {/* If you don't have an account, <a href="https://sapp-frontend.onrender.com/">Register</a> */}
+                    If you don't have an account, <Link to="/register">Register</Link>
                 </p>
                 </form>
             </div>
