@@ -6,6 +6,7 @@ import AddScheduleItem from "../components/AddScheduleItem";
 import { useParams } from "react-router-dom";
 
 function SchedulePage() {
+    const BASE_URL = process.env.REACT_APP_API_URL;
     const { id } = useParams();
     const [schedule, setSchedule] = useState<Schedule | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,7 +21,7 @@ function SchedulePage() {
 
     const fetchSchedule = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/schedules/${id}`, {
+            const response = await fetch(`${BASE_URL}/schedules/${id}`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -43,7 +44,7 @@ function SchedulePage() {
 
         const loadData = async () => {
             try {
-            const response = await fetch(`http://localhost:8080/schedules/${id}`, {
+            const response = await fetch(`${BASE_URL}/schedules/${id}`, {
                 method: "GET",
                 headers: {
                 Authorization: `Bearer ${token}`,
@@ -90,7 +91,7 @@ function SchedulePage() {
 
     const handleDelete = async(scheduleId: number, itemId: number) => {
         try{
-        await fetch(`http://localhost:8080/schedules/${scheduleId}/items/${itemId}`, {
+        await fetch(`${BASE_URL}/schedules/${scheduleId}/items/${itemId}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",

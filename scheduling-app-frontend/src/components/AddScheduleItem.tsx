@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./AddScheduleItem.css"
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 interface AddScheduleItemProps {
     scheduleId: number;
     onClose: () => void;
@@ -26,7 +28,7 @@ const AddScheduleItem: React.FC<AddScheduleItemProps> = ({
 
         try {
             const response = await fetch(
-                `http://localhost:8080/schedules/${scheduleId}/items`,
+                `${BASE_URL}/schedules/${scheduleId}/items`,
                 {
                     method: "POST",
                     headers: {

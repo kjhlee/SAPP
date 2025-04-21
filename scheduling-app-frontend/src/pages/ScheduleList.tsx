@@ -4,6 +4,7 @@ import ScheduleCard from "../components/ScheduleCard";
 import './styles/ScheduleList.css'
 
 function ScheduleList(){
+    const BASE_URL = process.env.REACT_APP_API_URL;
     const [schedules, setSchedules] = useState<Schedule[]> ([]);
     const token = localStorage.getItem("token");
     if(!token) {
@@ -16,7 +17,7 @@ function ScheduleList(){
         //     .catch((err) => console.error("Error fetching schedules: ", err));
         try {
             
-            const response = await fetch('http://localhost:8080/schedules/my', {
+            const response = await fetch(`${BASE_URL}/schedules/my`, {
                 method: "GET",
                 headers: {
                    "Authorization": `Bearer ${token}`,
@@ -48,7 +49,7 @@ function ScheduleList(){
 
         try{
             // const token = localStorage.getItem("token");
-            const response = await fetch(`http://localhost:8080/schedules/myadd`, {
+            const response = await fetch(`${BASE_URL}/schedules/myadd`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -70,7 +71,7 @@ function ScheduleList(){
 
     const handleDelete = async(scheduleId: number) => {
         try {
-            await fetch(`http://localhost:8080/schedules/delete/${scheduleId}`,
+            await fetch(`${BASE_URL}/schedules/delete/${scheduleId}`,
                 {
                     method: "DELETE",
                     headers: {
