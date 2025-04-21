@@ -1,5 +1,5 @@
 # Stage 1: Build the JAR
-FROM eclipse-temurin:24-jdk as builder
+FROM eclipse-temurin:21-jdk as builder
 
 WORKDIR /app
 
@@ -8,7 +8,7 @@ COPY . .
 RUN ./mvnw clean package -DskipTests
 
 # Stage 2: Run the JAR
-FROM eclipse-temurin:24-jdk
+FROM eclipse-temurin:21-jdk
 
 WORKDIR /app
 
