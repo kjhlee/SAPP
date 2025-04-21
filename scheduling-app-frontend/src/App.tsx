@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import ReactDOM from "react-dom/client"
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import SchedulePage from './pages/SchedulePage';
 import Login from './pages/Login';
@@ -12,7 +12,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
-  <BrowserRouter>
+  <Router>
     <Routes>
       <Route path="/" element={<Home />} />
       <Route 
@@ -34,7 +34,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element = {<Register />} />
     </Routes>
-  </BrowserRouter>
+  </Router>
   );
 }
 
