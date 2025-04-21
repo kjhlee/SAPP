@@ -16,6 +16,7 @@ function Register() {
         }
 
         try {
+            console.log("Calling: ", `${BASE_URL}/api/auth/register`);
             const response = await fetch(`${BASE_URL}/api/auth/register`, {
                 method: "POST",
                 headers: {
